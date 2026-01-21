@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* 1C Enterprise Color Palette (Classic/Taxi) */
+    --c1-yellow: #FCE100;
+    /* The Bright 1C Yellow */
+    --c1-yellow-pale: #FFF9C4;
+    /* Context/Highlight */
+    --c1-header-gradient-start: #FFEDA3;
+    --c1-header-gradient-end: #FFD54F;
+
+    --c1-bg: #F5F5F5;
+    /* Application Background */
+    --c1-panel-bg: #FFFFFF;
+    /* Content Area */
+
+    --c1-border: #A0A0A0;
+    /* Strong classic borders */
+    --c1-border-light: #D1D5DB;
+
+    --c1-text: #333333;
+    --c1-active-item: #FAE95D;
+    /* Selection Color */
+
+    --font-size-base: 13px;
+    /* OneC uses smaller system fonts */
+    --radius-sm: 2px;
+    /* Almost distinct corners */
+  }
+
+  body {
+    @apply bg-[var(--c1-bg)] text-[var(--c1-text)] antialiased font-sans text-[13px];
+  }
+
+  /* Reset modern shadows */
+  * {
+    @apply border-gray-300;
+  }
+}
+
+@layer components {
+
+  /* Classic Button Style */
+  .btn-1c {
+    @apply px-3 py-1 bg-gradient-to-b from-white to-gray-100 border border-gray-400 rounded-[2px] hover:bg-yellow-50 active:bg-yellow-200 transition-colors shadow-sm text-[13px] font-medium;
+  }
+
+  .btn-1c-primary {
+    @apply px-3 py-1 bg-[#FCE100] border border-orange-300 rounded-[2px] hover:bg-[#FFD54F] font-bold text-black shadow-sm;
+  }
+
+  /* Classic Panel */
+  .panel-1c {
+    @apply bg-white border border-[var(--c1-border)] shadow-md rounded-[2px];
+  }
+
+  /* Form Inputs */
+  .input-1c {
+    @apply border border-gray-400 px-2 py-1 text-[13px] rounded-[2px] focus:ring-1 focus:ring-yellow-400 focus:border-yellow-500 outline-none;
+  }
+}
