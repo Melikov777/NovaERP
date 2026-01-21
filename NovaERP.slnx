@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="NovaERP.Application/NovaERP.Application.csproj" />
+  <Project Path="NovaERP.Domain/NovaERP.Domain.csproj" />
+  <Project Path="NovaERP.Persistence/NovaERP.Persistence.csproj" />
+  <Project Path="NovaERP.WebAPI/NovaERP.WebAPI.csproj" />
+</Solution>
