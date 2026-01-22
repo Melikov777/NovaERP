@@ -9,6 +9,7 @@ import StockMovements from '@/pages/StockMovements';
 import Reports from '@/pages/Reports';
 import Customers from '@/pages/Customers';
 import UsersPage from '@/pages/Users';
+import RolesPage from '@/pages/Roles';
 import DashboardLayout from '@/components/Layout/DashboardLayout';
 import PermissionGuard from '@/components/Auth/PermissionGuard';
 import { useAuthStore } from '@/store/authStore';
@@ -74,6 +75,11 @@ function App() {
                 <Route path="users" element={
                     <PermissionGuard permission="Permissions.Users.View">
                         <UsersPage />
+                    </PermissionGuard>
+                } />
+                <Route path="roles" element={
+                    <PermissionGuard permission="Permissions.Users.View">
+                        <RolesPage />
                     </PermissionGuard>
                 } />
             </Route>
