@@ -52,6 +52,22 @@ public static class SeedData
                 await userManager.AddToRoleAsync(user, "SuperAdmin");
             }
         }
+        else
+        {
+            // Ensure Admin has correct credentials if already exists
+            adminUser.Email = "admin@novaerp.com";
+            adminUser.EmailConfirmed = true;
+            await userManager.UpdateAsync(adminUser);
+            
+            // Reset Password
+            var token = await userManager.GeneratePasswordResetTokenAsync(adminUser);
+            await userManager.ResetPasswordAsync(adminUser, token, "Admin123!");
+            
+            if (!await userManager.IsInRoleAsync(adminUser, "SuperAdmin"))
+            {
+                await userManager.AddToRoleAsync(adminUser, "SuperAdmin");
+            }
+        }
 
         // 4. Default Data
         if (!context.Categories.Any())
