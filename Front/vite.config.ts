@@ -11,11 +11,13 @@ export default defineConfig({
         },
     },
     server: {
+        host: '0.0.0.0', // Allow network access
+        allowedHosts: true, // Allow all hosts (tunneling)
         proxy: {
             '/api': {
                 target: 'http://localhost:5192',
                 changeOrigin: true,
-                secure: false, // For self-signed certs in dev
+                secure: false,
             }
         }
     }

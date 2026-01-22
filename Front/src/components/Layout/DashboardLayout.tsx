@@ -28,6 +28,7 @@ const DashboardLayout = () => {
         { icon: TrendingUp, label: 'Reports', path: '/reports', permission: 'Permissions.Stock.View' },
         { icon: Users, label: 'Customers', path: '/customers', permission: 'Permissions.Customers.View' },
         { icon: Shield, label: 'Users', path: '/users', permission: 'Permissions.Users.View' },
+        { icon: Shield, label: 'Roles', path: '/roles', permission: 'Permissions.Users.View' },
     ];
 
     const filteredNavItems = navItems.filter(item =>

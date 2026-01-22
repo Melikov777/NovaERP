@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Search, ShoppingCart, Trash2, Plus, Minus, CheckCircle, User, CreditCard, LayoutGrid } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
-import { Card, CardContent } from '@/components/ui/Card';
+import { ShoppingCart, Trash2, CheckCircle, LayoutGrid } from 'lucide-react';
 import api from '@/lib/axios';
 import { Product, Customer } from '@/types';
 import { formatCurrency, cn } from '@/lib/utils';
@@ -58,7 +55,6 @@ const POS = () => {
         setCart(prev => prev.map(item => {
             if (item.product.id === productId) {
                 const newQty = Math.max(1, item.quantity + delta);
-                // Optional: Check stock limits here
                 return { ...item, quantity: newQty };
             }
             return item;
@@ -70,7 +66,7 @@ const POS = () => {
     };
 
     const subtotal = cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
-    const tax = subtotal * 0.1; // 10% tax example
+    const tax = subtotal * 0.1;
     const total = subtotal + tax;
 
     const handleCheckout = async () => {
@@ -82,7 +78,7 @@ const POS = () => {
             const payload = {
                 customerId: selectedCustomer.id,
                 discountAmount: 0,
-                notes: "POS Sale (1C Interface)",
+                notes: "POS Sale",
                 saleItems: cart.map(item => ({
                     productId: item.product.id,
                     quantity: item.quantity,
@@ -93,7 +89,7 @@ const POS = () => {
 
             await api.post('/sales', payload);
             setCart([]);
-            alert('Cashier: Sale registered successfully.');
+            alert('Sale registered successfully.');
         } catch (error) {
             console.error('Checkout failed', error);
             alert('Error: Register failed. Verify stock levels.');
@@ -107,37 +103,46 @@ const POS = () => {
     );
 
     return (
-        <div className="flex h-[calc(100vh-8rem)] gap-2 font-sans">
-            {/* Left: Product Selector */}
-            <div className="flex-1 flex flex-col bg-white border border-gray-300 rounded-sm shadow-sm">
-                <div className="p-2 border-b border-gray-200 bg-gray-50 flex items-center justify-between">
+        <div className="flex h-[calc(100vh-8rem)] gap-2 font-sans select-none">
+            {/* Left: Product Catalog */}
+            <div className="flex-1 flex flex-col bg-white border border-[var(--c1-border)]">
+                {/* Toolbar */}
+                <div className="h-10 px-3 border-b border-[var(--c1-border)] bg-[var(--c1-header-bg)] flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <LayoutGrid className="h-5 w-5 text-gray-500" />
-                        <h2 className="font-bold text-gray-700">Nomenclature (Products)</h2>
+                        <LayoutGrid className="h-4 w-4 text-gray-600" />
+                        <span className="font-bold text-[14px] text-gray-800">Product Catalog</span>
                     </div>
-                    <Input
-                        placeholder="Search product code/name..."
-                        className="w-64 h-8 rounded-sm bg-white border-gray-300"
+                    <input
+                        placeholder="Search products..."
+                        className="input-1c w-64"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
 
-                <div className="flex-1 overflow-auto p-2 bg-gray-100">
-                    <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
+                {/* Product Grid */}
+                <div className="flex-1 overflow-auto p-2 bg-[var(--c1-bg)]">
+                    <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2">
                         {loading ? (
-                            <p className="col-span-full text-center p-4">Loading catalog...</p>
+                            <p className="col-span-full text-center p-4 text-gray-500">Loading catalog...</p>
+                        ) : filteredProducts.length === 0 ? (
+                            <p className="col-span-full text-center p-4 text-gray-500">No products found</p>
                         ) : (
                             filteredProducts.map(product => (
                                 <button
                                     key={product.id}
-                                    className="flex flex-col items-center justify-between p-2 bg-white border border-gray-300 rounded-sm shadow-sm hover:border-yellow-500 hover:ring-2 hover:ring-yellow-200 transition-all h-24 active:scale-95"
+                                    className={cn(
+                                        "flex flex-col items-center justify-between p-2 bg-white border border-[var(--c1-border-light)]",
+                                        "hover:border-blue-400 hover:bg-blue-50 transition-all h-24 active:scale-95"
+                                    )}
                                     onClick={() => addToCart(product)}
                                 >
-                                    <div className="text-xs text-gray-800 font-medium text-center line-clamp-2 w-full">{product.name}</div>
+                                    <div className="text-[12px] text-gray-800 font-medium text-center line-clamp-2 w-full">
+                                        {product.name}
+                                    </div>
                                     <div className="mt-1 w-full flex justify-between items-end border-t border-gray-100 pt-1">
-                                        <span className="text-[10px] text-gray-400">Stock: {product.stockQuantity}</span>
-                                        <span className="font-bold text-sm text-blue-700">{formatCurrency(product.price)}</span>
+                                        <span className="text-[10px] text-gray-400">Stk: {product.stockQuantity}</span>
+                                        <span className="font-bold text-[13px] text-blue-700">{formatCurrency(product.price)}</span>
                                     </div>
                                 </button>
                             ))
@@ -147,22 +152,21 @@ const POS = () => {
             </div>
 
             {/* Right: Receipt / Cart */}
-            <div className="w-[450px] flex flex-col bg-white border border-gray-300 rounded-sm shadow-sm">
-                <div className="p-2 border-b border-gray-200 bg-yellow-50 flex items-center justify-between">
+            <div className="w-[420px] flex flex-col bg-white border border-[var(--c1-border)]">
+                {/* Cart Header */}
+                <div className="h-10 px-3 border-b border-[var(--c1-border)] bg-[#EBF5FB] flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <div className="bg-yellow-400 p-1 rounded-sm">
-                            <ShoppingCart className="h-4 w-4 text-black" />
-                        </div>
-                        <h2 className="font-bold text-gray-800">Current Receipt</h2>
+                        <ShoppingCart className="h-4 w-4 text-blue-600" />
+                        <span className="font-bold text-[14px] text-gray-800">Current Receipt</span>
                     </div>
-                    <div className="text-xs text-gray-500">#{Math.floor(Math.random() * 10000)}</div>
+                    <span className="text-[11px] text-gray-500">#{String(Date.now()).slice(-6)}</span>
                 </div>
 
                 {/* Customer Select */}
-                <div className="p-2 border-b border-gray-200 bg-gray-50">
-                    <label className="text-xs font-bold text-gray-500 uppercase tracking-wide">Client / Counterparty</label>
+                <div className="px-3 py-2 border-b border-[var(--c1-border-light)] bg-gray-50">
+                    <label className="text-[11px] font-semibold text-gray-500 uppercase">Client / Counterparty</label>
                     <select
-                        className="w-full mt-1 text-sm p-1.5 rounded-sm border border-gray-300 bg-white focus:ring-yellow-500 focus:border-yellow-500"
+                        className="input-1c w-full mt-1"
                         value={selectedCustomer?.id || ''}
                         onChange={(e) => setSelectedCustomer(customers.find(c => c.id === Number(e.target.value)) || null)}
                     >
@@ -174,41 +178,62 @@ const POS = () => {
 
                 {/* Cart Items Table */}
                 <div className="flex-1 overflow-auto">
-                    <table className="w-full text-sm text-left">
-                        <thead className="bg-gray-100 sticky top-0 text-gray-600 text-xs">
-                            <tr className="border-b border-gray-200">
-                                <th className="px-2 py-1.5 font-semibold">Item</th>
-                                <th className="px-2 py-1.5 font-semibold text-center w-20">Qty</th>
-                                <th className="px-2 py-1.5 font-semibold text-right w-20">Total</th>
+                    <table className="w-full text-[13px]">
+                        <thead className="bg-[#EBF5FB] sticky top-0">
+                            <tr className="border-b border-[var(--c1-border)]">
+                                <th className="px-2 py-1.5 text-left font-semibold text-gray-700">Item</th>
+                                <th className="px-2 py-1.5 text-center font-semibold text-gray-700 w-20">Qty</th>
+                                <th className="px-2 py-1.5 text-right font-semibold text-gray-700 w-20">Total</th>
                                 <th className="px-1 py-1.5 w-8"></th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-100">
+                        <tbody>
                             {cart.length === 0 ? (
                                 <tr>
                                     <td colSpan={4} className="p-8 text-center text-gray-400 italic">
-                                        Scan items or select from catalog...
+                                        Select products to add to cart...
                                     </td>
                                 </tr>
                             ) : (
-                                cart.map(item => (
-                                    <tr key={item.product.id} className="hover:bg-blue-50">
+                                cart.map((item, idx) => (
+                                    <tr
+                                        key={item.product.id}
+                                        className={cn(
+                                            "border-b border-[var(--c1-border-light)] hover:bg-[var(--c1-active-item)]",
+                                            idx % 2 === 0 ? "bg-white" : "bg-gray-50"
+                                        )}
+                                    >
                                         <td className="px-2 py-2">
-                                            <div className="font-medium text-gray-800 truncate max-w-[150px]">{item.product.name}</div>
+                                            <div className="font-medium text-gray-800 truncate max-w-[140px]">{item.product.name}</div>
                                             <div className="text-[10px] text-gray-500">@{formatCurrency(item.product.price)}</div>
                                         </td>
                                         <td className="px-2 py-2 text-center">
-                                            <div className="inline-flex items-center border border-gray-300 rounded-sm bg-white">
-                                                <button onClick={() => updateQuantity(item.product.id, -1)} className="px-1 hover:bg-gray-100 text-gray-600">-</button>
-                                                <span className="px-2 font-mono text-center min-w-[30px]">{item.quantity}</span>
-                                                <button onClick={() => updateQuantity(item.product.id, 1)} className="px-1 hover:bg-gray-100 text-gray-600">+</button>
+                                            <div className="inline-flex items-center border border-[var(--c1-border-light)] bg-white">
+                                                <button
+                                                    onClick={() => updateQuantity(item.product.id, -1)}
+                                                    className="px-2 py-0.5 hover:bg-gray-100 text-gray-600 border-r border-[var(--c1-border-light)]"
+                                                >
+                                                    -
+                                                </button>
+                                                <span className="px-3 font-mono text-center min-w-[32px]">{item.quantity}</span>
+                                                <button
+                                                    onClick={() => updateQuantity(item.product.id, 1)}
+                                                    className="px-2 py-0.5 hover:bg-gray-100 text-gray-600 border-l border-[var(--c1-border-light)]"
+                                                >
+                                                    +
+                                                </button>
                                             </div>
                                         </td>
                                         <td className="px-2 py-2 text-right font-semibold text-gray-800">
                                             {formatCurrency(item.product.price * item.quantity)}
                                         </td>
-                                        <td className="px-1 py-2 text-center text-red-500 cursor-pointer hover:bg-red-50" onClick={() => removeFromCart(item.product.id)}>
-                                            <Trash2 className="h-4 w-4" />
+                                        <td className="px-1 py-2 text-center">
+                                            <button
+                                                onClick={() => removeFromCart(item.product.id)}
+                                                className="p-1 text-red-500 hover:bg-red-50 border border-transparent hover:border-red-200"
+                                            >
+                                                <Trash2 className="h-4 w-4" />
+                                            </button>
                                         </td>
                                     </tr>
                                 ))
@@ -217,24 +242,29 @@ const POS = () => {
                     </table>
                 </div>
 
-                {/* Totals & Actions */}
-                <div className="p-4 bg-gray-50 border-t border-gray-300 space-y-3">
-                    <div className="flex justify-between items-center text-sm">
+                {/* Totals & Checkout */}
+                <div className="p-3 bg-gray-50 border-t border-[var(--c1-border)] space-y-2">
+                    <div className="flex justify-between text-[13px]">
                         <span className="text-gray-600">Subtotal:</span>
-                        <span className="font-bold">{formatCurrency(subtotal)}</span>
+                        <span className="font-semibold">{formatCurrency(subtotal)}</span>
                     </div>
-                    <div className="flex justify-between items-center text-sm">
+                    <div className="flex justify-between text-[13px]">
                         <span className="text-gray-600">Tax (10%):</span>
-                        <span className="font-bold">{formatCurrency(tax)}</span>
+                        <span className="font-semibold">{formatCurrency(tax)}</span>
                     </div>
 
-                    <div className="flex justify-between items-center bg-yellow-100 p-2 border border-yellow-300 rounded-sm">
-                        <span className="text-lg font-bold text-gray-800">TOTAL:</span>
-                        <span className="text-xl font-bold text-black">{formatCurrency(total)}</span>
+                    <div className="flex justify-between items-center bg-blue-50 p-2 border border-blue-200">
+                        <span className="text-[15px] font-bold text-gray-800">TOTAL:</span>
+                        <span className="text-[18px] font-bold text-blue-700">{formatCurrency(total)}</span>
                     </div>
 
-                    <Button
-                        className="w-full bg-green-600 hover:bg-green-700 text-white font-bold h-12 text-lg rounded-sm shadow-sm flex items-center justify-center gap-2"
+                    <button
+                        className={cn(
+                            "w-full h-11 text-[14px] font-bold flex items-center justify-center gap-2",
+                            cart.length === 0 || processing
+                                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                                : "bg-green-600 hover:bg-green-700 text-white"
+                        )}
                         disabled={cart.length === 0 || processing}
                         onClick={handleCheckout}
                     >
@@ -242,10 +272,10 @@ const POS = () => {
                             'Processing...'
                         ) : (
                             <>
-                                <CheckCircle className="h-6 w-6" /> PROCESS PAYMENT
+                                <CheckCircle className="h-5 w-5" /> PROCESS PAYMENT
                             </>
                         )}
-                    </Button>
+                    </button>
                 </div>
             </div>
         </div>

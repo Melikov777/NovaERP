@@ -1,0 +1,332 @@
+cloudflared.exe : 
+2026-01-22T16:56:56Z 
+INF Thank you for 
+trying Cloudflare 
+Tunnel. Doing so, 
+without a Cloudflare 
+account, is a quick 
+way to experiment and 
+try it out. However, 
+be aware that these 
+account-less Tunnels 
+have no uptime 
+guarantee, are 
+subject to the 
+Cloudflare Online 
+Services Terms of Use 
+(https://www.cloudflar
+e.com/website-terms/),
+ and Cloudflare 
+reserves the right to 
+investigate your use 
+of Tunnels for 
+violations of such 
+terms. If you intend 
+to use Tunnels in 
+production you should 
+use a pre-created 
+named tunnel by 
+following: https://dev
+elopers.cloudflare.com
+/cloudflare-one/connec
+tions/connect-apps
+At line:1 char:1
++ & 'C:\Program Files 
+(x86)\cloudflared\clou
+dflared.exe' tunnel 
+--url h ...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (2026-01-22   
+ T16:5...ns/connec    
+t-apps:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+2026-01-22T16:56:56Z 
+INF Requesting new 
+quick Tunnel on 
+trycloudflare.com...
+2026-01-22T16:57:02Z 
+INF +-----------------
+----------------------
+----------------------
+----------------------
+---------+
+2026-01-22T16:57:02Z 
+INF |  Your quick 
+Tunnel has been 
+created! Visit it at 
+(it may take some 
+time to be 
+reachable):  |
+2026-01-22T16:57:02Z 
+INF |  https://pitch-a
+dvance-gnu-iowa.tryclo
+udflare.com           
+                      
+         |
+2026-01-22T16:57:02Z 
+INF +-----------------
+----------------------
+----------------------
+----------------------
+---------+
+2026-01-22T16:57:02Z 
+INF Cannot determine 
+default configuration 
+path. No file 
+[config.yml 
+config.yaml] in 
+[~/.cloudflared 
+~/.cloudflare-warp 
+~/cloudflare-warp]
+2026-01-22T16:57:02Z 
+INF Version 2025.8.1 
+(Checksum b5d598b00cc3
+a28cabc5812d9f76281933
+4614bae452db4e7f23eefe
+7b081556)
+2026-01-22T16:57:02Z 
+INF GOOS: windows, 
+GOVersion: go1.24.2, 
+GoArch: amd64
+2026-01-22T16:57:02Z 
+INF Settings: 
+map[ha-connections:1 
+protocol:quic url:http
+://localhost:5173]
+2026-01-22T16:57:02Z 
+INF cloudflared will 
+not automatically 
+update on Windows 
+systems.
+2026-01-22T16:57:02Z 
+INF Generated 
+Connector ID: 41f0cd30
+-c014-4903-8bf2-a97a2e
+4b827d
+2026-01-22T16:57:02Z 
+INF Initial protocol 
+quic
+2026-01-22T16:57:02Z 
+INF ICMP proxy will 
+use 192.168.1.65 as 
+source for IPv4
+2026-01-22T16:57:02Z 
+INF ICMP proxy will 
+use fe80::fb33:4a49:bd
+8f:3a35 in zone 
+Ethernet as source 
+for IPv6
+2026-01-22T16:57:02Z 
+ERR Cannot determine 
+default origin 
+certificate path. No 
+file cert.pem in 
+[~/.cloudflared 
+~/.cloudflare-warp 
+~/cloudflare-warp]. 
+You need to specify 
+the origin 
+certificate path by 
+specifying the 
+origincert option in 
+the configuration 
+file, or set 
+TUNNEL_ORIGIN_CERT 
+environment variable 
+originCertPath=
+2026-01-22T16:57:02Z 
+INF cloudflared does 
+not support loading 
+the system root 
+certificate pool on 
+Windows. Please use 
+--origin-ca-pool 
+<PATH> to specify the 
+path to the 
+certificate pool
+2026-01-22T16:57:02Z 
+INF ICMP proxy will 
+use 192.168.1.65 as 
+source for IPv4
+2026-01-22T16:57:02Z 
+INF Tunnel connection 
+curve preferences: 
+[X25519MLKEM768 
+CurveP256] 
+connIndex=0 event=0 
+ip=198.41.192.27
+2026-01-22T16:57:02Z 
+INF ICMP proxy will 
+use fe80::fb33:4a49:bd
+8f:3a35 in zone 
+Ethernet as source 
+for IPv6
+2026-01-22T16:57:02Z 
+INF Starting metrics 
+server on 127.0.0.1:20
+241/metrics
+2026-01-22T16:57:02Z 
+INF Registered tunnel 
+connection 
+connIndex=0 connection
+=6a02cc55-1be2-425a-af
+62-3b410711450a 
+event=0 
+ip=198.41.192.27 
+location=ams15 
+protocol=quic
+2026-01-22T17:13:03Z 
+ERR failed to run the 
+datagram handler 
+error="write udp [::]:
+54201->198.41.192.27:7
+844: wsasendto: An 
+operation on a socket 
+could not be 
+performed because the 
+system lacked 
+sufficient buffer 
+space or because a 
+queue was full." 
+connIndex=0 event=0 
+ip=198.41.192.27
+2026-01-22T17:13:03Z 
+ERR failed to accept 
+incoming stream 
+requests 
+error="failed to 
+accept QUIC stream: 
+write udp [::]:54201->
+198.41.192.27:7844: 
+wsasendto: An 
+operation on a socket 
+could not be 
+performed because the 
+system lacked 
+sufficient buffer 
+space or because a 
+queue was full." 
+connIndex=0 event=0 
+ip=198.41.192.27
+2026-01-22T17:13:03Z 
+ERR failed to serve 
+tunnel connection 
+error="datagram 
+manager encountered a 
+failure while 
+serving" connIndex=0 
+event=0 
+ip=198.41.192.27
+2026-01-22T17:13:03Z 
+ERR Serve tunnel 
+error error="datagram 
+manager encountered a 
+failure while 
+serving" connIndex=0 
+event=0 
+ip=198.41.192.27
+2026-01-22T17:13:03Z 
+INF Retrying 
+connection in up to 
+1s connIndex=0 
+event=0 
+ip=198.41.192.27
+2026-01-22T17:13:04Z 
+INF Tunnel connection 
+curve preferences: 
+[X25519MLKEM768 
+CurveP256] 
+connIndex=0 event=0 
+ip=198.41.192.27
+2026-01-22T17:13:05Z 
+INF Registered tunnel 
+connection 
+connIndex=0 connection
+=722f330c-a9c8-4f2c-a0
+06-291830f81c56 
+event=0 
+ip=198.41.192.27 
+location=ams15 
+protocol=quic
+2026-01-22T17:22:09Z 
+ERR failed to run the 
+datagram handler 
+error="write udp [::]:
+54201->198.41.192.27:7
+844: wsasendto: An 
+operation on a socket 
+could not be 
+performed because the 
+system lacked 
+sufficient buffer 
+space or because a 
+queue was full." 
+connIndex=0 event=0 
+ip=198.41.192.27
+2026-01-22T17:22:09Z 
+ERR failed to accept 
+incoming stream 
+requests 
+error="failed to 
+accept QUIC stream: 
+write udp [::]:54201->
+198.41.192.27:7844: 
+wsasendto: An 
+operation on a socket 
+could not be 
+performed because the 
+system lacked 
+sufficient buffer 
+space or because a 
+queue was full." 
+connIndex=0 event=0 
+ip=198.41.192.27
+2026-01-22T17:22:09Z 
+ERR failed to serve 
+tunnel connection 
+error="datagram 
+manager encountered a 
+failure while 
+serving" connIndex=0 
+event=0 
+ip=198.41.192.27
+2026-01-22T17:22:09Z 
+ERR Serve tunnel 
+error error="datagram 
+manager encountered a 
+failure while 
+serving" connIndex=0 
+event=0 
+ip=198.41.192.27
+2026-01-22T17:22:09Z 
+INF Retrying 
+connection in up to 
+1s connIndex=0 
+event=0 
+ip=198.41.192.27
+2026-01-22T17:22:10Z 
+INF Tunnel connection 
+curve preferences: 
+[X25519MLKEM768 
+CurveP256] 
+connIndex=0 event=0 
+ip=198.41.192.27
+2026-01-22T17:22:11Z 
+INF Registered tunnel 
+connection 
+connIndex=0 connection
+=53352e8a-e930-49d2-85
+32-12fb1b7e1a26 
+event=0 
+ip=198.41.192.27 
+location=ams15 
+protocol=quic
